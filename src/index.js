@@ -41,7 +41,7 @@ async function handle_advance(data) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ payload }),
+      body: JSON.stringify({ "payload": stringToHex(levelString)}),
     });
     const json = await advance_req.json();
     console.log(
@@ -63,6 +63,16 @@ async function handle_inspect(data) {
 // convert hex input to number
 function hexToNumber(hex) {
   return parseInt(hex, 16);
+}
+
+// convert string to hex
+function stringToHex(str) {
+  let hex = "";
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i).toString(16);
+    hex += charCode.padStart(2, '0'); // Ensure each byte is represented by two characters
+  }
+  return hex;
 }
 
 // Function to generate a random array of 4 numbers
